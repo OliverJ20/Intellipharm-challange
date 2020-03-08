@@ -1,0 +1,38 @@
+version: '3.7'
+
+services:
+  db:
+    image: mariadb:5
+    container_name: api-db
+    network_mode: bridge
+    volumes:
+      - ./docker/mysql:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: api
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: qwertyui
+      MYSQL_ROOT_PASSWORD: qwertyui
+  adminer:
+    image: adminer
+    container_name: api-adminer
+    network_mode: bridge
+    ports:
+      - 13373:8080
+    depends_on:
+      - db
+    links:
+      - db
+  backend:
+    build:
+      context: .
+    container_name: api-php
+    ports:
+      - 1337:80
+    network_mode: bridge
+    restart: on-failure
+    volumes:
+      - ./api:/var/www/html/api
+    depends_on:
+      - db
+    links:
+      - db
