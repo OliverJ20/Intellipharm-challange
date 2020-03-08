@@ -19,7 +19,7 @@ import {
 import { graphData } from "../../utils/helpers";
 
 // I would typically store this in the .env file but thought for the purpose of the challenge would be better here
-const API_PATH = 'http://localhost:1337/api/contacts.php';
+const API_PATH = 'http://localhost:1337/api/members.php';
 
 export class homePage extends Component {
     constructor(props) {

@@ -1,12 +1,12 @@
 # Intellipharm-challange
 
-This challenge took about 6 hours total, not including environment setup and the link
+This challenge took 6 hours of total development time, not including environment setup and the link
 but including code tidy up, repo setup and manual testing to make sure docker and everything
 worked correctly.
 
-I strongly believe I have been able to complete all tasks stated except for the 5th UI task,
-which was to drill into the chart for further detail.
-
+I strongly believe I have delivered on all tasks except for the javascript/UI task that was :
+5. Create a function that drills into each year on the graph and displays the number of sign-ups for each month in that year.
+ 
 I had not attempted charts before and this proved to be a unique challenge, which I thought would be 
 fairly simply turned out to be rather complex. I do believe I would of been able to achieve this task
 however it would of taken considerably more time, possible a day or so without assistance or guidance 
@@ -38,7 +38,12 @@ as the docker container is spun up and working correctly.
 
 Also in cases where i have redeployed the project to other repos docker maintained the sql database,
 If it hasn't then the easiest method to restore the database for this challenge is to go to
-http://localhost:13373/adminer.php this will take you to adminer where you can use the login credentials
-in the `docker-compose.yml` file under the db section. Once logged in, simply navigate to the api table and
+http://localhost:13373/adminer.php this will take you to adminer. The login credentials for adminer are
+1. `server`: db
+2. `username`: root
+3. `password`: qwertyui
+4. `database`: api
+
+ Once logged in, simply navigate to the api table and
 import members.sql file, which can be located in the `api` folder of the project.
 

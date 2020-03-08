@@ -1,4 +1,5 @@
 <?php
+// Would normally place these in env file but didn't for the purposes of the challenge
 $host = "db";
 $user = "root";
 $password = "qwertyui";
@@ -6,43 +7,19 @@ $dbname = "api";
 $id = '';
 
 if (isset($_SERVER['HTTP_ORIGIN'])) {
-    // Decide if the origin in $_SERVER['HTTP_ORIGIN'] is one
-    // you want to allow, and if so:
     header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
     header('Access-Control-Allow-Credentials: true');
     header('Access-Control-Max-Age: 86400');    // cache for 1 day
 }
 
-// Access-Control headers are received during OPTIONS requests
-if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-
-    if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
-        // may also be using PUT, PATCH, HEAD etc
-        header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-
-    if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
-        header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
-
-    exit(0);
-}
-
 $con = mysqli_connect($host, $user, $password,$dbname);
-
 
 $method = $_SERVER['REQUEST_METHOD'];
 $request = explode('/', trim($_SERVER['PATH_INFO'],'/'));
 
-
 if (!$con) {
     die("Connection failed: " . mysqli_connect_error());
-}
-
-//echo "help";
-//echo $_GET['first'];
-//echo $_GET["firstname"];
-
-
-
+};
 
 switch ($method) {
     case 'GET':
@@ -52,28 +29,14 @@ switch ($method) {
         $email = $_GET['email'];
         $gender = $_GET['gender'];
         $joined_date = $_GET["joined_date"];
-        $offset = $_GET["offset"];
-        $rowCount = $_GET["rowCount"];
+        $offset = $_GET["offset"] ?? 0;
+        $rowCount = $_GET["rowCount"] ?? 1000;
         $sql = "select * from members where firstname LIKE '$firstname%' AND surname Like '$surname%' AND email LIKE '$email%' AND gender LIKE '$gender%' AND joined_date LIKE '$joined_date%' LIMIT $offset, $rowCount";
-        break;
-    case 'POST':
-        $firstname = $_POST["firstname"];
-        $surename = $_POST["surname"];
-        $email = $_POST["email"];
-        $gender = $_POST["gender"];
-        $joined_date = $_POST["joined_date"];
-
-        $sql = "insert into contacts (firstname, surname, email, gender, joined_date) values ('$firstname', '$surename', '$email', '$gender', '$joined_date')";
         break;
 }
 
-
-
 // run SQL statement
 $result = mysqli_query($con,$sql);
-
-// die if SQL statement failed
-echo $result;
 
 if (!$result) {
     http_response_code(404);
@@ -83,14 +46,12 @@ if (!$result) {
 if ($method == 'GET') {
     if (!$id) echo '[';
     for ($i=0 ; $i<mysqli_num_rows($result) ; $i++) {
+        // display in json
         echo ($i>0?',':'').json_encode(mysqli_fetch_object($result));
     }
     if (!$id) echo ']';
-} elseif ($method == 'POST') {
-    echo json_encode($result);
 } else {
     echo mysqli_affected_rows($con);
 }
-
 
 $con->close();
