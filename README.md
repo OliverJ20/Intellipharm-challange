@@ -1,19 +1,4 @@
-# Intellipharm-challange
 
-This challenge took 6 hours of total development time, not including environment setup and the link
-but including code tidy up, repo setup and manual testing to make sure docker and everything
-worked correctly.
-
-I strongly believe I have delivered on all tasks except for the javascript/UI task that was :
-5. Create a function that drills into each year on the graph and displays the number of sign-ups for each month in that year.
- 
-I had not attempted charts before and this proved to be a unique challenge, which I thought would be 
-fairly simply turned out to be rather complex. I do believe I would of been able to achieve this task
-however it would of taken considerably more time, possible a day or so without assistance or guidance 
-to fully comprehend the abilities and means to complete it.
-
-I based this project of a number of others that I have done similar, and some areas might of proven
-to be overkill, however it is the setup and environment i felt most comfortable in delivering the tasks.
 
 # Prerequisites
 
